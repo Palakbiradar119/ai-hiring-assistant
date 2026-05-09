@@ -1,144 +1,137 @@
-\# 📄 RAG PDF Chatbot — Powered by Groq API
+# 🚀 AI Hiring Assistant Pro
 
+An AI-powered hiring platform that automates resume screening, candidate ranking, and hiring analysis using Generative AI, RAG pipelines, and Streamlit.
 
+---
 
-> Chat with any PDF document using AI! Upload a PDF and ask questions — get instant, accurate answers with source citations.
+# 🔥 Features
 
+✅ Bulk Resume Upload  
+✅ AI Resume Screening  
+✅ Candidate Ranking  
+✅ Job Description Matching  
+✅ Resume Parsing  
+✅ AI Hiring Recommendations  
+✅ Recruiter-Friendly Dashboard  
+✅ Fast AI Responses  
+✅ ATS-style Filtering  
+✅ CSV Export Support  
 
+---
 
-!\[RAG PDF Chatbot](screenshot3.png)
+# 🧠 Tech Stack
 
-
-
-\---
-
-
-
-\## 🚀 Live Demo
-
-> Upload any PDF → Ask questions → Get answers in seconds!
-
-
-
-\---
-
-
-
-\## ✨ Features
-
-
-
-\- 📤 Upload any PDF document
-
-\- 🔍 Retrieval-Augmented Generation (RAG) pipeline
-
-\- ⚡ Super fast answers using \*\*Groq API\*\* (LLaMA 3.3 70B)
-
-\- 📚 Source citations shown for every answer
-
-\- 🧠 Zero hallucination via grounded prompting
-
-\- 💾 Vector search using \*\*ChromaDB\*\*
-
-
-
-\---
-
-
-
-\## 🛠️ Tech Stack
-
-
-
-| Layer | Technology |
-
+| Technology | Purpose |
 |---|---|
+| Python | Backend |
+| Streamlit | Frontend/UI |
+| LangChain | AI Workflow |
+| Gemini API / Groq API | LLM |
+| ChromaDB | Vector Database |
+| HuggingFace Embeddings | Embeddings |
+| Pandas | Data Processing |
+| PyPDFLoader | Resume Parsing |
 
-| LLM | Groq API (llama-3.3-70b-versatile) |
+---
 
-| Framework | LangChain |
-
-| Vector Database | ChromaDB |
-
-| Embeddings | HuggingFace (all-MiniLM-L6-v2) |
-
-| PDF Parsing | PyPDFLoader |
-
-| UI | Streamlit |
-
-| Language | Python 3.9+ |
-
-
-
-\---
-
-
-
-\## 📸 Screenshots
-
-
-
-\### 1. Upload PDF
-
-!\[Upload](screenshot1.png)
-
-
-
-\### 2. PDF Processed
-
-!\[Processed](screenshot2.png)
-
-
-
-\### 3. Ask Questions \& Get Answers
-
-!\[Answer](screenshot3.png)
-
-
-
-\---
-
-
-
-\## ⚙️ How to Run Locally
-
-
-
-\### 1. Clone the repository
+# 📂 Project Structure
 
 ```bash
-
-git clone https://github.com/Palakbiradar119/RAG-PDF-Chatbot.git
-
-cd RAG-PDF-Chatbot
-
+ai-hiring-assistant/
+│
+├── app.py
+├── rag_engine.py
+├── screener.py
+├── requirements.txt
+├── README.md
 ```
 
+---
 
+# ⚙️ Installation
 
-\### 2. Create virtual environment
+## 1️⃣ Clone Repository
 
 ```bash
+git clone https://github.com/Palakbiradar119/ai-hiring-assistant.git
 
+cd ai-hiring-assistant
+```
+
+---
+
+## 2️⃣ Create Virtual Environment
+
+```bash
 python -m venv venv
 
-venv\\Scripts\\activate
-
+venv\Scripts\activate
 ```
 
+---
 
-
-\### 3. Install dependencies
+## 3️⃣ Install Dependencies
 
 ```bash
-
 pip install -r requirements.txt
-
 ```
 
+---
 
+# 🔑 Add API Key
 
-\### 4. Set up your API key
+Create a `.env` file:
 
-Create a `.env` file in the project root:
+```env
+GEMINI_API_KEY=your_api_key
+```
 
+OR
+
+```env
+GROQ_API_KEY=your_api_key
+```
+
+---
+
+# ▶️ Run Application
+
+```bash
+streamlit run app.py
+```
+
+---
+
+# 🌐 Live Demo
+
+(Add Streamlit Deployment Link Here)
+
+---
+
+# 📸 Screenshots
+
+(Add screenshots here later)
+
+---
+
+# 👨‍💻 Author
+
+Palak Biradar
+
+---
+
+# 🚀 Future Improvements
+
+- AI Interview Bot
+- Voice-based Interviews
+- Multi-Agent Hiring Workflow
+- SQL Candidate Database
+- Recruiter Authentication
+- ATS Score Analysis
+- Email Automation
+
+---
+
+# ⭐ If you like this project
+
+Give this repository a star ⭐
