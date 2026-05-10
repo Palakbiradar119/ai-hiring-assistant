@@ -107,7 +107,6 @@ streamlit run app.py
 https://ai-hiring-assistant-jiklsdrqhpf3cwghnnr9xm.streamlit.app/
 
 # 📸 Screenshots
-# 📸 Screenshots
 
 ## Home Page
 
