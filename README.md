@@ -105,7 +105,7 @@ streamlit run app.py
 # 🌐 Live Demo
 
 (Add Streamlit Deployment Link Here)
-
+https://ai-hiring-assistant-jiklsdrqhpf3cwghnnr9xm.streamlit.app/
 ---
 
 # 📸 Screenshots
