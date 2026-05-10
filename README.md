@@ -136,7 +136,14 @@ https://ai-hiring-assistant-jiklsdrqhpf3cwghnnr9xm.streamlit.app/
 
 Palak Biradar
 
----
+---# ⚡ How It Works
+
+1. Upload candidate resumes in PDF format  
+2. Paste the job description  
+3. AI analyzes resumes using RAG pipelines  
+4. Candidates are ranked based on skill matching  
+5. HR chatbot assists recruiters  
+6. Interview questions are generated automatically
 
 # 🚀 Future Improvements
 
