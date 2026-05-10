@@ -132,21 +132,6 @@ https://ai-hiring-assistant-jiklsdrqhpf3cwghnnr9xm.streamlit.app/
 ![Interview](screenshot4.png)
 
 
-## Candidate Ranking
-
-![Ranking](screenshot2.png)
-
----
-
-## HR Chatbot
-
-![Chatbot](screenshot3.png)
-
----
-
-## Interview Generator
-
-![Interview](screenshot4.png)
 
 # 👨‍💻 Author
 
