@@ -1,36 +1,64 @@
 # 🚀 AI Hiring Assistant Pro
 
-An AI-powered hiring platform that automates resume screening, candidate ranking, and hiring analysis using Generative AI, RAG pipelines, and Streamlit.
+An enterprise-style AI-powered hiring platform that automates resume screening, candidate ranking, job description matching, and interview preparation using Generative AI, RAG pipelines, and LLM-powered workflows.
 
 ---
 
-# 🔥 Features
+# 📌 Problem Statement
 
-✅ Bulk Resume Upload  
-✅ AI Resume Screening  
-✅ Candidate Ranking  
-✅ Job Description Matching  
-✅ Resume Parsing  
-✅ AI Hiring Recommendations  
-✅ Recruiter-Friendly Dashboard  
-✅ Fast AI Responses  
-✅ ATS-style Filtering  
-✅ CSV Export Support  
+Recruiters often spend hours manually reviewing resumes and shortlisting candidates. Traditional ATS systems fail to understand contextual skills and candidate-job fit effectively.
+
+AI Hiring Assistant Pro solves this problem using Retrieval-Augmented Generation (RAG), semantic resume analysis, and LLM-powered candidate evaluation.
 
 ---
 
-# 🧠 Tech Stack
+# ✨ Features
 
-| Technology | Purpose |
-|---|---|
-| Python | Backend |
-| Streamlit | Frontend/UI |
-| LangChain | AI Workflow |
-| Gemini API / Groq API | LLM |
-| ChromaDB | Vector Database |
-| HuggingFace Embeddings | Embeddings |
-| Pandas | Data Processing |
-| PyPDFLoader | Resume Parsing |
+✅ Bulk Resume Upload
+✅ AI Resume Screening
+✅ Candidate Ranking System
+✅ Job Description Matching
+✅ Resume Parsing & Skill Extraction
+✅ ATS-style Filtering
+✅ AI Hiring Recommendations
+✅ HR Chatbot Assistant
+✅ AI Interview Question Generator
+✅ CSV Export Support
+✅ Recruiter-Friendly Dashboard
+
+---
+
+# 🧠 System Workflow
+
+1️⃣ Upload candidate resumes in PDF format
+2️⃣ Extract and process resume text
+3️⃣ Generate embeddings using HuggingFace models
+4️⃣ Store embeddings inside ChromaDB vector database
+5️⃣ Compare resumes against Job Description
+6️⃣ Rank candidates based on semantic matching
+7️⃣ Generate hiring recommendations and interview questions
+
+---
+
+# 🏗️ Architecture
+
+Recruiter → Upload Resumes → Resume Parser → Embedding Generation → ChromaDB Vector Store → Gemini/Groq LLM → Candidate Ranking & AI Insights
+
+---
+
+# 🛠️ Tech Stack
+
+| Category        | Technology            |
+| --------------- | --------------------- |
+| Language        | Python                |
+| Frontend        | Streamlit             |
+| AI Framework    | LangChain             |
+| LLM             | Gemini API / Groq API |
+| Vector Database | ChromaDB              |
+| Embeddings      | HuggingFace           |
+| Data Processing | Pandas                |
+| PDF Parsing     | PyPDFLoader           |
+| Deployment      | Streamlit Cloud       |
 
 ---
 
@@ -44,11 +72,32 @@ ai-hiring-assistant/
 ├── screener.py
 ├── requirements.txt
 ├── README.md
+├── images/
 ```
 
 ---
 
-# ⚙️ Installation
+# 📸 Screenshots
+
+## Dashboard
+
+(Add screenshot here)
+
+## Resume Ranking
+
+(Add screenshot here)
+
+## HR Chatbot
+
+(Add screenshot here)
+
+## Interview Generator
+
+(Add screenshot here)
+
+---
+
+# ⚙️ Installation & Setup
 
 ## 1️⃣ Clone Repository
 
@@ -58,8 +107,6 @@ git clone https://github.com/Palakbiradar119/ai-hiring-assistant.git
 cd ai-hiring-assistant
 ```
 
----
-
 ## 2️⃣ Create Virtual Environment
 
 ```bash
@@ -67,8 +114,6 @@ python -m venv venv
 
 venv\Scripts\activate
 ```
-
----
 
 ## 3️⃣ Install Dependencies
 
@@ -78,7 +123,7 @@ pip install -r requirements.txt
 
 ---
 
-# 🔑 Add API Key
+# 🔑 Configure API Key
 
 Create a `.env` file:
 
@@ -106,57 +151,41 @@ streamlit run app.py
 
 https://ai-hiring-assistant-jiklsdrqhpf3cwghnnr9xm.streamlit.app/
 
-# 📸 Screenshots
-
-## Home Page
-
-![Home](screenshot1.png)
-
 ---
 
-## Candidate Ranking
+# 🔥 Key Highlights
 
-![Ranking](screenshot2.png)
+* Enterprise-style AI hiring workflow
+* Real-world ATS-inspired candidate ranking
+* RAG-powered semantic resume understanding
+* AI-generated hiring recommendations
+* Streamlit deployment with live demo
+* Modular and scalable architecture
 
 ---
-
-## HR Chatbot
-
-![Chatbot](screenshot3.png)
-
----
-
-## Interview Generator
-
-![Interview](screenshot4.png)
-
-
-
-# 👨‍💻 Author
-
-Palak Biradar
-
----# ⚡ How It Works
-
-1. Upload candidate resumes in PDF format  
-2. Paste the job description  
-3. AI analyzes resumes using RAG pipelines  
-4. Candidates are ranked based on skill matching  
-5. HR chatbot assists recruiters  
-6. Interview questions are generated automatically
 
 # 🚀 Future Improvements
 
-- AI Interview Bot
-- Voice-based Interviews
-- Multi-Agent Hiring Workflow
-- SQL Candidate Database
-- Recruiter Authentication
-- ATS Score Analysis
-- Email Automation
+* Multi-Agent Hiring Workflow
+* AI Voice Interview System
+* Recruiter Authentication
+* Email Automation
+* SQL Candidate Database
+* Advanced ATS Scoring
+* Docker Deployment
+* FastAPI Backend Integration
 
 ---
 
-# ⭐ If you like this project
+# 👨‍💻 Author
 
-Give this repository a star ⭐
+Pratiksha Biradar
+Gen AI Developer | Data Scientist | AI Engineer
+
+GitHub: https://github.com/Palakbiradar119
+
+---
+
+# ⭐ Support
+
+If you like this project, give it a star ⭐
