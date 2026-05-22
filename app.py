@@ -1,280 +1,230 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from screener import screen_multiple_resumes, generate_interview_questions
-import os
-from groq import Groq
-from dotenv import load_dotenv
-import pdfplumber
+from pdf_utils import extract_text_from_pdf
+from orchestrator import run_pipeline
 
-load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# ---------------------------------------------------
+# PAGE CONFIG
+# ---------------------------------------------------
 
 st.set_page_config(
-    page_title="AI Hiring Assistant Pro",
+    page_title="AI Hiring Assistant",
     page_icon="🤖",
     layout="wide"
 )
 
-st.title("🤖 AI Hiring Assistant Pro")
-st.markdown("**Complete AI powered recruitment platform — screen, rank, and interview candidates automatically.**")
+# ---------------------------------------------------
+# HEADER
+# ---------------------------------------------------
 
-tab1, tab2, tab3 = st.tabs([
-    "📋 Resume Screener & Ranker",
-    "💬 HR Chatbot",
-    "❓ Interview Question Generator"
-])
+st.title("🤖 AI Hiring Assistant")
+st.markdown("### Multi-Agent AI Recruitment Platform")
+st.divider()
 
-# ============================================================
-# TAB 1 — RESUME SCREENER AND RANKER
-# ============================================================
-with tab1:
-    st.header("📋 Bulk Resume Screener & Ranker")
-    st.markdown("Upload multiple resumes and paste the job description — AI screens and ranks all candidates.")
+# ---------------------------------------------------
+# SIDEBAR
+# ---------------------------------------------------
 
-    col1, col2 = st.columns([1, 1])
-
-    with col1:
-        st.subheader("1️⃣ Upload Resumes")
-        uploaded_files = st.file_uploader(
-            "Upload resume PDFs",
-            type=["pdf"],
-            accept_multiple_files=True,
-            key="screener_files"
-        )
-        if uploaded_files:
-            st.success(f"✅ {len(uploaded_files)} resume(s) uploaded")
-            for f in uploaded_files:
-                st.caption(f"📄 {f.name}")
-
-    with col2:
-        st.subheader("2️⃣ Paste Job Description")
-        job_description = st.text_area(
-            "Paste the complete job description here:",
-            height=200,
-            placeholder="e.g. We are looking for a Python Developer with 2+ years experience..."
-        )
-
+with st.sidebar:
+    st.header("⚡ AI Agents")
+    st.success("✅ Parser Agent")
+    st.success("✅ Matcher Agent")
+    st.success("✅ Interview Agent")
+    st.success("✅ HR Agent")
     st.divider()
+    st.info("""
+This platform uses multiple AI agents working together.
 
-    if st.button("🚀 Screen & Rank All Candidates", type="primary", use_container_width=True):
+Workflow:
+1. Resume Parsing
+2. JD Matching
+3. Interview Generation
+4. HR Recommendation
+""")
+
+# ---------------------------------------------------
+# MAIN TABS
+# ---------------------------------------------------
+
+tab1, tab2 = st.tabs(["📄 Resume Screening", "📊 Analytics"])
+
+# ===================================================
+# TAB 1
+# ===================================================
+
+with tab1:
+
+    st.subheader("Upload Resumes")
+    uploaded_files = st.file_uploader(
+        "Upload Resume PDFs",
+        type=["pdf"],
+        accept_multiple_files=True
+    )
+
+    st.subheader("Job Description")
+    job_description = st.text_area(
+        "Paste Job Description Here",
+        height=250
+    )
+
+    if st.button("🚀 Run Multi-Agent Pipeline", use_container_width=True):
+
         if not uploaded_files:
-            st.error("Please upload at least one resume!")
-        elif not job_description.strip():
-            st.error("Please paste the job description!")
-        else:
-            with st.spinner(f"Screening {len(uploaded_files)} resume(s)..."):
-                results = screen_multiple_resumes(uploaded_files, job_description)
-            st.session_state.screening_results = results
-            st.success(f"✅ Done! {len(results)} candidates evaluated.")
+            st.error("Please upload at least one resume.")
+            st.stop()
 
-    if "screening_results" in st.session_state and st.session_state.screening_results:
-        results = st.session_state.screening_results
-        valid = [r for r in results if "overall_score" in r]
+        if not job_description.strip():
+            st.error("Please paste a job description.")
+            st.stop()
 
-        if valid:
-            st.subheader("🏆 Candidate Rankings")
+        results = []
+        progress_bar = st.progress(0)
 
-            m1, m2, m3, m4 = st.columns(4)
-            with m1:
-                st.metric("Total Candidates", len(valid))
-            with m2:
-                recommended = len([r for r in valid if "Recommended" in r.get("recommendation", "")])
-                st.metric("Recommended", recommended)
-            with m3:
-                avg_score = sum(r["overall_score"] for r in valid) / len(valid)
-                st.metric("Average Score", f"{avg_score:.0f}/100")
-            with m4:
-                st.metric("Top Score", f"{valid[0]['overall_score']}/100")
+        for idx, uploaded_file in enumerate(uploaded_files):
 
-            if len(valid) > 1:
-                chart_data = pd.DataFrame({
-                    "Candidate": [r.get("candidate_name", r["filename"]) for r in valid],
-                    "Score": [r["overall_score"] for r in valid]
+            st.divider()
+            st.subheader(f"📄 Processing: {uploaded_file.name}")
+
+            try:
+
+                # -----------------------------------------
+                # EXTRACT TEXT FROM PDF
+                # -----------------------------------------
+
+                resume_text = extract_text_from_pdf(uploaded_file)
+
+                if not resume_text or resume_text.startswith("Error"):
+                    st.error(f"Could not extract text: {resume_text}")
+                    continue
+
+                st.success(f"✅ Text extracted — {len(resume_text)} characters")
+
+                # -----------------------------------------
+                # RUN PIPELINE
+                # -----------------------------------------
+
+                with st.spinner(f"Running AI agents on {uploaded_file.name}..."):
+
+                    result = run_pipeline(
+                        pdf_bytes=resume_text,        # passing extracted text
+                        filename=uploaded_file.name,
+                        job_description=job_description
+                    )
+
+                # -----------------------------------------
+                # SHOW RESULTS IMMEDIATELY
+                # -----------------------------------------
+
+                col1, col2, col3 = st.columns(3)
+
+                with col1:
+                    st.metric("Match Score", result.get("match_result", {}).get("match_percentage", "N/A"))
+
+                with col2:
+                    st.metric("Verdict", result.get("match_result", {}).get("verdict", "N/A"))
+
+                with col3:
+                    st.metric("HR Decision", result.get("hr_result", {}).get("recommendation", "N/A"))
+
+                with st.expander("📋 View Full Report"):
+
+                    st.markdown("### 👤 Parsed Resume")
+                    st.json(result.get("parsed_resume", {}))
+
+                    st.markdown("### 🎯 Match Analysis")
+                    st.json(result.get("match_result", {}))
+
+                    st.markdown("### ❓ Interview Questions")
+                    questions = result.get("interview_questions", {}).get("questions", [])
+                    for q in questions:
+                        st.markdown(f"- {q}")
+
+                    st.markdown("### ✅ HR Report")
+                    st.write(result.get("hr_result", {}).get("full_report", ""))
+
+                results.append(result)
+
+            except Exception as e:
+                st.error(f"Error processing {uploaded_file.name}: {str(e)}")
+                results.append({
+                    "candidate_name": uploaded_file.name,
+                    "overall_score": 0,
+                    "recommendation": "ERROR",
+                    "error": str(e)
                 })
+
+            progress_bar.progress((idx + 1) / len(uploaded_files))
+
+        st.session_state["results"] = results
+        st.success("✅ Multi-Agent Pipeline Completed")
+
+# ===================================================
+# TAB 2
+# ===================================================
+
+with tab2:
+
+    st.subheader("Candidate Analytics")
+
+    if "results" not in st.session_state:
+        st.info("Run the pipeline first to see analytics.")
+
+    else:
+
+        results = st.session_state["results"]
+
+        if not results:
+            st.warning("No results available.")
+
+        else:
+
+            # -----------------------------------------
+            # SUMMARY TABLE
+            # -----------------------------------------
+
+            table_data = []
+            for r in results:
+                table_data.append({
+                    "Candidate": r.get("candidate_name", "Unknown"),
+                    "Match Score": r.get("match_result", {}).get("match_percentage", "N/A"),
+                    "Verdict": r.get("match_result", {}).get("verdict", "N/A"),
+                    "Matched Skills": ", ".join(r.get("match_result", {}).get("matched_skills", [])),
+                    "HR Decision": r.get("hr_result", {}).get("recommendation", "N/A")
+                })
+
+            df = pd.DataFrame(table_data)
+            st.dataframe(df, use_container_width=True)
+
+            # -----------------------------------------
+            # BAR CHART
+            # -----------------------------------------
+
+            try:
+                chart_df = df.copy()
+                chart_df["Score"] = chart_df["Match Score"].str.replace("%", "").astype(float)
+
                 fig = px.bar(
-                    chart_data,
+                    chart_df,
                     x="Candidate",
                     y="Score",
                     color="Score",
-                    color_continuous_scale="RdYlGn",
-                    title="Candidate Score Comparison",
-                    range_y=[0, 100]
+                    title="Candidate Match Scores",
+                    color_continuous_scale="Greens"
                 )
                 st.plotly_chart(fig, use_container_width=True)
 
-            table_data = []
-            for r in valid:
-                rec = r.get("recommendation", "")
-                badge = ("🟢 " if "Strongly" in rec else "🟡 " if "Recommended" in rec else "🟠 " if "Maybe" in rec else "🔴 ") + rec
-                table_data.append({
-                    "Rank": f"#{r['rank']}",
-                    "Candidate": r.get("candidate_name", "Unknown"),
-                    "Score": f"{r['overall_score']}/100",
-                    "Experience": r.get("experience_match", "N/A"),
-                    "Education": r.get("education_match", "N/A"),
-                    "Recommendation": badge,
-                })
+            except Exception:
+                st.info("Chart not available.")
 
-            st.dataframe(pd.DataFrame(table_data), use_container_width=True)
+            # -----------------------------------------
+            # DOWNLOAD CSV
+            # -----------------------------------------
 
-            csv = pd.DataFrame(table_data).to_csv(index=False)
-            st.download_button("⬇️ Download Rankings CSV", csv, "rankings.csv", "text/csv")
-
-            st.divider()
-            st.subheader("📊 Detailed Candidate Analysis")
-
-            for r in valid:
-                score = r["overall_score"]
-                icon = "🟢" if score >= 70 else "🟡" if score >= 50 else "🔴"
-
-                with st.expander(f"{icon} #{r['rank']} {r.get('candidate_name','Unknown')} — {score}/100 — {r.get('recommendation','')}"):
-                    c1, c2 = st.columns(2)
-                    with c1:
-                        st.markdown("**✅ Matching Skills:**")
-                        for skill in r.get("skills_match", []):
-                            st.markdown(f"- {skill}")
-                    with c2:
-                        st.markdown("**❌ Skills Gap:**")
-                        gaps = r.get("skills_gap", [])
-                        if gaps:
-                            for gap in gaps:
-                                st.markdown(f"- {gap}")
-                        else:
-                            st.markdown("- No major gaps found")
-
-                    st.markdown("**📝 AI Summary:**")
-                    st.info(r.get("summary", ""))
-
-                    st.markdown("**❓ Suggested Interview Questions:**")
-                    for i, q in enumerate(r.get("interview_questions", []), 1):
-                        st.markdown(f"{i}. {q}")
-
-# ============================================================
-# TAB 2 — HR CHATBOT
-# ============================================================
-with tab2:
-    st.header("💬 HR Assistant Chatbot")
-    st.markdown("Ask anything about hiring, candidates, HR policies, or interview tips.")
-
-    if "chat_history" not in st.session_state:
-        st.session_state.chat_history = []
-
-    for msg in st.session_state.chat_history:
-        with st.chat_message(msg["role"]):
-            st.write(msg["content"])
-
-    user_input = st.chat_input("Ask me anything about hiring...")
-
-    if user_input:
-        st.session_state.chat_history.append({
-            "role": "user",
-            "content": user_input
-        })
-        with st.chat_message("user"):
-            st.write(user_input)
-
-        with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                messages = [
-                    {
-                        "role": "system",
-                        "content": """You are an expert HR assistant and talent acquisition specialist.
-You help with resume evaluation, interview tips, HR policies, job descriptions,
-salary benchmarking, and candidate comparison.
-Be concise, professional and helpful."""
-                    }
-                ]
-                for msg in st.session_state.chat_history:
-                    messages.append({
-                        "role": msg["role"],
-                        "content": msg["content"]
-                    })
-                response = client.chat.completions.create(
-                    model="llama-3.3-70b-versatile",
-                    messages=messages,
-                    temperature=0.7,
-                    max_tokens=800
-                )
-                reply = response.choices[0].message.content
-
-            st.write(reply)
-            st.session_state.chat_history.append({
-                "role": "assistant",
-                "content": reply
-            })
-
-    if st.session_state.chat_history:
-        if st.button("🗑️ Clear Chat"):
-            st.session_state.chat_history = []
-            st.rerun()
-
-# ============================================================
-# TAB 3 — INTERVIEW QUESTION GENERATOR
-# ============================================================
-with tab3:
-    st.header("❓ Interview Question Generator")
-    st.markdown("Upload a resume and paste the job description — get 8 custom interview questions instantly.")
-
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        resume_file = st.file_uploader(
-            "Upload candidate resume PDF",
-            type=["pdf"],
-            key="interview_resume"
-        )
-    with col2:
-        jd_for_interview = st.text_area(
-            "Paste job description:",
-            height=150,
-            key="interview_jd"
-        )
-
-    candidate_name = st.text_input(
-        "Candidate name (optional):",
-        placeholder="e.g. Rahul Verma"
-    )
-
-    if st.button("🎯 Generate Interview Questions", type="primary"):
-        if not resume_file:
-            st.error("Please upload a resume!")
-        elif not jd_for_interview.strip():
-            st.error("Please paste the job description!")
-        else:
-            with st.spinner("Generating questions..."):
-                with pdfplumber.open(resume_file) as pdf:
-                    resume_text = ""
-                    for page in pdf.pages:
-                        resume_text += page.extract_text() or ""
-                name = candidate_name if candidate_name else "Candidate"
-                questions, error = generate_interview_questions(
-                    resume_text, jd_for_interview, name
-                )
-
-            if error:
-                st.error(f"Error: {error}")
-            elif questions:
-                st.subheader(f"Interview Questions for {name}")
-                type_colors = {
-                    "Technical": "🔵",
-                    "Behavioral": "🟢",
-                    "Situational": "🟡",
-                    "Gap Analysis": "🔴",
-                    "Motivation": "🟣"
-                }
-                for i, q in enumerate(questions, 1):
-                    q_type = q.get("type", "General")
-                    icon = type_colors.get(q_type, "⚪")
-                    with st.expander(f"{icon} Question {i} — {q_type}"):
-                        st.markdown(f"**{q.get('question', '')}**")
-
-                q_text = "\n\n".join([
-                    f"Q{i} ({q.get('type','General')}): {q.get('question','')}"
-                    for i, q in enumerate(questions, 1)
-                ])
-                st.download_button(
-                    "⬇️ Download Questions",
-                    q_text,
-                    f"questions_{name}.txt",
-                    "text/plain"
-                )
+            csv = df.to_csv(index=False)
+            st.download_button(
+                "⬇️ Download Results CSV",
+                csv,
+                "candidate_results.csv",
+                "text/csv"
+            )
