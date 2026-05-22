@@ -1,191 +1,162 @@
-# 🚀 AI Hiring Assistant Pro
+# 🤖 AI Hiring Assistant
+### Multi-Agent AI Recruitment Platform
 
-An enterprise-style AI-powered hiring platform that automates resume screening, candidate ranking, job description matching, and interview preparation using Generative AI, RAG pipelines, and LLM-powered workflows.
-
----
-
-# 📌 Problem Statement
-
-Recruiters often spend hours manually reviewing resumes and shortlisting candidates. Traditional ATS systems fail to understand contextual skills and candidate-job fit effectively.
-
-AI Hiring Assistant Pro solves this problem using Retrieval-Augmented Generation (RAG), semantic resume analysis, and LLM-powered candidate evaluation.
+A production-ready AI-powered hiring platform that automates resume screening, 
+candidate ranking, job description matching, and interview preparation using 
+Multi-Agent Architecture, Groq LLM, and intelligent AI workflows.
 
 ---
 
-# ✨ Features
+## 📌 Problem Statement
 
-✅ Bulk Resume Upload
-✅ AI Resume Screening
-✅ Candidate Ranking System
-✅ Job Description Matching
-✅ Resume Parsing & Skill Extraction
-✅ ATS-style Filtering
-✅ AI Hiring Recommendations
-✅ HR Chatbot Assistant
-✅ AI Interview Question Generator
-✅ CSV Export Support
-✅ Recruiter-Friendly Dashboard
+Recruiters spend hours manually reviewing resumes and shortlisting candidates. 
+Traditional ATS systems fail to understand contextual skills and candidate-job 
+fit effectively.
+
+AI Hiring Assistant solves this using a **Multi-Agent AI Pipeline** with 4 
+specialized AI agents working together to automate the entire hiring workflow.
 
 ---
 
-# 🧠 System Workflow
+## ✨ Features
 
-1️⃣ Upload candidate resumes in PDF format
-2️⃣ Extract and process resume text
-3️⃣ Generate embeddings using HuggingFace models
-4️⃣ Store embeddings inside ChromaDB vector database
-5️⃣ Compare resumes against Job Description
-6️⃣ Rank candidates based on semantic matching
-7️⃣ Generate hiring recommendations and interview questions
-
----
-
-# 🏗️ Architecture
-
-Recruiter → Upload Resumes → Resume Parser → Embedding Generation → ChromaDB Vector Store → Gemini/Groq LLM → Candidate Ranking & AI Insights
+- ✅ Bulk Resume Upload (PDF)
+- ✅ AI Resume Parsing & Skill Extraction
+- ✅ Job Description Matching with TF-IDF
+- ✅ Match Score & Verdict Generation
+- ✅ AI Interview Question Generator
+- ✅ HR Report & Hiring Recommendation
+- ✅ Candidate Analytics Dashboard
+- ✅ CSV Export Support
+- ✅ Multi-Agent Pipeline Architecture
+- ✅ Live Streamlit Deployment
 
 ---
 
-# 🛠️ Tech Stack
+## 🧠 Multi-Agent System Workflow
 
-| Category        | Technology            |
-| --------------- | --------------------- |
-| Language        | Python                |
-| Frontend        | Streamlit             |
-| AI Framework    | LangChain             |
-| LLM             | Gemini API / Groq API |
-| Vector Database | ChromaDB              |
-| Embeddings      | HuggingFace           |
-| Data Processing | Pandas                |
-| PDF Parsing     | PyPDFLoader           |
-| Deployment      | Streamlit Cloud       |
+### Agent Details:
+
+| Agent | Role |
+|---|---|
+| Parser Agent | Extracts name, email, phone, skills, education from resume |
+| Matcher Agent | TF-IDF cosine similarity matching against job description |
+| Interview Agent | Generates 10 personalized interview questions using Groq LLM |
+| HR Agent | Creates final HR report with hiring recommendation |
 
 ---
 
-# 📂 Project Structure
+## 🏗️ Architecture
 
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+|---|---|
+| Language | Python |
+| Frontend | Streamlit |
+| LLM | Groq API (Llama 3.3 70B) |
+| PDF Parsing | pdfplumber |
+| Matching | Scikit-learn (TF-IDF) |
+| Deployment | Streamlit Cloud |
+| Version Control | GitHub |
+
+---
+
+## 📂 Project Structure
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone Repository
 ```bash
-ai-hiring-assistant/
-│
-├── app.py
-├── rag_engine.py
-├── screener.py
-├── requirements.txt
-├── README.md
-├── images/
-```
-
----
-
-# 📸 Screenshots
-
-## Dashboard
-
-(Add screenshot here)
-
-## Resume Ranking
-
-(Add screenshot here)
-
-## HR Chatbot
-
-(Add screenshot here)
-
-## Interview Generator
-
-(Add screenshot here)
-
----
-
-# ⚙️ Installation & Setup
-
-## 1️⃣ Clone Repository
-
-```bash
-git clone https://github.com/Palakbiradar119/ai-hiring-assistant.git
-
+git clone https://github.com/pratikshabiradar19/ai-hiring-assistant.git
 cd ai-hiring-assistant
 ```
 
-## 2️⃣ Create Virtual Environment
-
+### 2️⃣ Create Virtual Environment
 ```bash
 python -m venv venv
-
 venv\Scripts\activate
 ```
 
-## 3️⃣ Install Dependencies
-
+### 3️⃣ Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-# 🔑 Configure API Key
-
+### 4️⃣ Configure API Key
 Create a `.env` file:
 
-```env
-GEMINI_API_KEY=your_api_key
-```
+Get your free Groq API key at 👉 https://console.groq.com/keys
 
-OR
-
-```env
-GROQ_API_KEY=your_api_key
-```
-
----
-
-# ▶️ Run Application
-
+### 5️⃣ Run Application
 ```bash
 streamlit run app.py
 ```
 
 ---
 
-# 🌐 Live Demo
+## 🌐 Live Demo
 
-https://ai-hiring-assistant-jiklsdrqhpf3cwghnnr9xm.streamlit.app/
-
----
-
-# 🔥 Key Highlights
-
-* Enterprise-style AI hiring workflow
-* Real-world ATS-inspired candidate ranking
-* RAG-powered semantic resume understanding
-* AI-generated hiring recommendations
-* Streamlit deployment with live demo
-* Modular and scalable architecture
+👉 **https://ai-hiring-assistant-jiklsdrqhpf3cwghnnr9xm.streamlit.app/**
 
 ---
 
-# 🚀 Future Improvements
+## 📊 How It Works
 
-* Multi-Agent Hiring Workflow
-* AI Voice Interview System
-* Recruiter Authentication
-* Email Automation
-* SQL Candidate Database
-* Advanced ATS Scoring
-* Docker Deployment
-* FastAPI Backend Integration
+1. Upload one or multiple resume PDFs
+2. Paste the job description
+3. Click **"Run Multi-Agent Pipeline"**
+4. Each resume goes through all 4 agents
+5. View match scores, verdicts, interview questions
+6. Download results as CSV
 
 ---
 
-# 👨‍💻 Author
+## 🔥 Key Highlights
 
-Pratiksha Biradar
+- Multi-Agent AI architecture with 4 specialized agents
+- Real-world ATS-inspired candidate ranking
+- Groq LLM powered interview question generation
+- Automated HR report with hiring recommendation
+- TF-IDF cosine similarity for accurate JD matching
+- Live Streamlit deployment with analytics dashboard
+- Modular and scalable codebase
+
+---
+
+## 📦 Requirements
+
+---
+
+## 🚀 Future Improvements
+
+- [ ] RAG-powered semantic resume understanding
+- [ ] Multi-Agent Voice Interview System
+- [ ] Recruiter Authentication
+- [ ] Email Automation to candidates
+- [ ] SQL Candidate Database
+- [ ] Advanced ATS Scoring
+- [ ] Docker Deployment
+- [ ] FastAPI Backend Integration
+- [ ] LinkedIn Profile Integration
+
+---
+
+## 👩‍💻 Author
+
+**Pratiksha Biradar**
 Gen AI Developer | Data Scientist | AI Engineer
 
-GitHub: https://github.com/Palakbiradar119
+- GitHub: https://github.com/pratikshabiradar19
+- LinkedIn: linkedin.com/in/pratiksha-biradar
 
 ---
 
-# ⭐ Support
+## ⭐ Support
 
-If you like this project, give it a star ⭐
+If you like this project, give it a star ⭐ and share it!
+
