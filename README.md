@@ -7,6 +7,14 @@ Multi-Agent Architecture, Groq LLM, and intelligent AI workflows.
 
 ---
 
+## 🖥️ Demo Screenshots
+
+### Main Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Multi-Agent Results
+![Results](screenshots/results.png)
+
 ## 📌 Problem Statement
 
 Recruiters spend hours manually reviewing resumes and shortlisting candidates. 
@@ -48,6 +56,12 @@ specialized AI agents working together to automate the entire hiring workflow.
 
 ## 🏗️ Architecture
 
+## 🏗️ System Architecture
+
+Resume PDF → Parser Agent → Matcher Agent → Interview Agent → HR Agent → Final Report
+                ↓               ↓                ↓              ↓
+          Skill Extract    TF-IDF Score    10 Questions    HR Report + CSV
+
 ---
 
 ## 🛠️ Tech Stack
@@ -62,9 +76,21 @@ specialized AI agents working together to automate the entire hiring workflow.
 | Deployment | Streamlit Cloud |
 | Version Control | GitHub |
 
----
+--
 
 ## 📂 Project Structure
+
+ai-hiring-assistant/
+├── app.py              # Main Streamlit application
+├── parser_agent.py     # Resume parsing agent
+├── matcher_agent.py    # JD matching agent
+├── interview_agent.py  # Interview question agent
+├── hr_agent.py         # HR report agent
+├── orchestrator.py     # Multi-agent coordinator
+├── rag_engine.py       # RAG pipeline
+├── pdf_utils.py        # PDF processing utilities
+├── requirements.txt    # Dependencies
+└── README.md
 
 ---
 
@@ -130,6 +156,15 @@ streamlit run app.py
 
 ## 📦 Requirements
 
+streamlit
+groq
+pdfplumber
+scikit-learn
+pandas
+python-dotenv
+langchain
+chromadb
+
 ---
 
 ## 🚀 Future Improvements
@@ -152,7 +187,7 @@ streamlit run app.py
 Gen AI Developer | Data Scientist | AI Engineer
 
 - GitHub: https://github.com/pratikshabiradar19
-- LinkedIn: linkedin.com/in/pratiksha-biradar
+- LinkedIn: https://www.linkedin.com/in/pratiksha-biradar-979b98315  ✅
 
 ---
 
