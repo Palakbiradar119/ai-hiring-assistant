@@ -6,6 +6,12 @@ candidate ranking, job description matching, and interview preparation using
 Multi-Agent Architecture, Groq LLM, and intelligent AI workflows.
 
 ---
+## Badges 
+
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Live-brightgreen)
+![Groq](https://img.shields.io/badge/LLM-Groq%20API-orange)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ## 🖥️ Demo Screenshots
 
