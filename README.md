@@ -13,14 +13,19 @@ Multi-Agent Architecture, Groq LLM, and intelligent AI workflows.
 ![Groq](https://img.shields.io/badge/LLM-Groq%20API-orange)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 🖥️ Demo Screenshots
+## 🖥️ Demo Screenshot
 
-### Main Dashboard
-![Dashboard](screenshots/dashboard.png)
+### 1. Resume Upload & Job Description
+![Upload](upload.png)
 
-### Multi-Agent Results
-![Results](screenshots/results.png)
+### 2. Multi-Agent Pipeline Running
+![Agents](agents.png)
 
+### 3. Match Score & Results
+![Results](results.png)
+
+### 4. Analytics Dashboard
+![Dashboard](dashboard.png)
 ## 📌 Problem Statement
 
 Recruiters spend hours manually reviewing resumes and shortlisting candidates. 
