@@ -1,208 +1,86 @@
-# 🤖 AI Hiring Assistant
-### Multi-Agent AI Recruitment Platform
+# 🧑‍💼 AI Hiring Assistant Pro
 
-A production-ready AI-powered hiring platform that automates resume screening, 
-candidate ranking, job description matching, and interview preparation using 
-Multi-Agent Architecture, Groq LLM, and intelligent AI workflows.
+> Enterprise-style AI hiring platform that automates resume screening, JD matching, candidate ranking, and interview generation — replacing hours of manual HR work with a semantic RAG pipeline.
 
----
-## Badges 
-
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![Streamlit](https://img.shields.io/badge/Streamlit-Live-brightgreen)
-![Groq](https://img.shields.io/badge/LLM-Groq%20API-orange)
-![License](https://img.shields.io/badge/License-MIT-yellow)
-
-## 🖥️ Demo Screenshot
-
-### 1. Resume Upload & Job Description
-![Upload](upload.png)
-
-### 2. Multi-Agent Pipeline Running
-![Agents](agents.png)
-
-### 3. Match Score & Results
-![Results](results.png)
-
-### 4. Analytics Dashboard
-![Dashboard](dashboard.png)
-## 📌 Problem Statement
-
-Recruiters spend hours manually reviewing resumes and shortlisting candidates. 
-Traditional ATS systems fail to understand contextual skills and candidate-job 
-fit effectively.
-
-AI Hiring Assistant solves this using a **Multi-Agent AI Pipeline** with 4 
-specialized AI agents working together to automate the entire hiring workflow.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)](https://ai-hiring-assistant-jiklsdrqhpf3cwghnnr9xm.streamlit.app)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python)](https://python.org)
 
 ---
 
-## ✨ Features
+## The problem this solves
 
-- ✅ Bulk Resume Upload (PDF)
-- ✅ AI Resume Parsing & Skill Extraction
-- ✅ Job Description Matching with TF-IDF
-- ✅ Match Score & Verdict Generation
-- ✅ AI Interview Question Generator
-- ✅ HR Report & Hiring Recommendation
-- ✅ Candidate Analytics Dashboard
-- ✅ CSV Export Support
-- ✅ Multi-Agent Pipeline Architecture
-- ✅ Live Streamlit Deployment
+Manual resume screening for a single role takes 4–8 hours. A recruiter reads 100+ resumes, matches them to the JD, ranks candidates, generates interview questions — all manually. This platform automates the entire pipeline using RAG and LLMs.
 
----
-
-## 🧠 Multi-Agent System Workflow
-
-### Agent Details:
-
-| Agent | Role |
-|---|---|
-| Parser Agent | Extracts name, email, phone, skills, education from resume |
-| Matcher Agent | TF-IDF cosine similarity matching against job description |
-| Interview Agent | Generates 10 personalized interview questions using Groq LLM |
-| HR Agent | Creates final HR report with hiring recommendation |
-
----
-
-## 🏗️ Architecture
-
-## 🏗️ System Architecture
-
-Resume PDF → Parser Agent → Matcher Agent → Interview Agent → HR Agent → Final Report
-                ↓               ↓                ↓              ↓
-          Skill Extract    TF-IDF Score    10 Questions    HR Report + CSV
+```
+Job Description (text)
+    │
+    ▼
+Gemini Embeddings ──► ChromaDB vector store
+                              │
+Resume Pool (PDF/text)        │
+    │                         │
+    ▼                         ▼
+Gemini Embeddings ──► Semantic similarity search
+                              │
+                              ▼
+                    ATS-style keyword filtering
+                              │
+                              ▼
+                    Candidate ranking (score 0–100)
+                              │
+                    ┌─────────┴──────────┐
+                    ▼                    ▼
+            HR Recommendations    Interview Question
+            (hire/reject/maybe)   Generator (role-specific)
+                    │
+                    ▼
+            HR Chatbot (Q&A about
+            any candidate or role)
+```
 
 ---
 
-## 🛠️ Tech Stack
+## Features
 
-| Category | Technology |
-|---|---|
-| Language | Python |
-| Frontend | Streamlit |
-| LLM | Groq API (Llama 3.3 70B) |
-| PDF Parsing | pdfplumber |
-| Matching | Scikit-learn (TF-IDF) |
-| Deployment | Streamlit Cloud |
-| Version Control | GitHub |
-
---
-
-## 📂 Project Structure
-
-ai-hiring-assistant/
-├── app.py              # Main Streamlit application
-├── parser_agent.py     # Resume parsing agent
-├── matcher_agent.py    # JD matching agent
-├── interview_agent.py  # Interview question agent
-├── hr_agent.py         # HR report agent
-├── orchestrator.py     # Multi-agent coordinator
-├── rag_engine.py       # RAG pipeline
-├── pdf_utils.py        # PDF processing utilities
-├── requirements.txt    # Dependencies
-└── README.md
+| Feature | What it does |
+|---------|-------------|
+| JD–Resume matching | Semantic similarity using Gemini embeddings + ChromaDB |
+| ATS filtering | Keyword extraction from JD, hard-filter resumes missing critical skills |
+| Candidate ranking | Composite score: semantic match + keyword coverage + experience signals |
+| HR recommendations | LLM-generated: hire / reject / interview with reasoning |
+| Interview generator | Role + candidate-specific technical and behavioral questions |
+| HR chatbot | Ask any question about shortlisted candidates |
 
 ---
 
-## ⚙️ Installation & Setup
+## Architecture decisions
 
-### 1️⃣ Clone Repository
+**Why RAG for resume matching?**
+Keyword matching misses synonyms ("developed" vs "built", "NLP" vs "natural language processing"). Semantic embedding captures meaning, not just words — a resume mentioning "built LLM pipelines" correctly matches a JD asking for "LangChain experience".
+
+**ChromaDB as the vector store**
+Lightweight, runs in-process (no separate server), persists to disk. Right choice for a single-node application where Pinecone's overhead isn't justified.
+
+---
+
+## Run locally
+
 ```bash
 git clone https://github.com/pratikshabiradar19/ai-hiring-assistant.git
 cd ai-hiring-assistant
-```
 
-### 2️⃣ Create Virtual Environment
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
-
-### 3️⃣ Install Dependencies
-```bash
 pip install -r requirements.txt
-```
 
-### 4️⃣ Configure API Key
-Create a `.env` file:
-
-Get your free Groq API key at 👉 https://console.groq.com/keys
-
-### 5️⃣ Run Application
-```bash
+# Add GOOGLE_API_KEY to .env
 streamlit run app.py
 ```
 
 ---
 
-## 🌐 Live Demo
+## Tech stack
 
-👉 **https://ai-hiring-assistant-jiklsdrqhpf3cwghnnr9xm.streamlit.app/**
-
----
-
-## 📊 How It Works
-
-1. Upload one or multiple resume PDFs
-2. Paste the job description
-3. Click **"Run Multi-Agent Pipeline"**
-4. Each resume goes through all 4 agents
-5. View match scores, verdicts, interview questions
-6. Download results as CSV
+`LangChain` `RAG Pipelines` `ChromaDB` `Gemini API` `Google Generative AI Embeddings` `Python` `Streamlit`
 
 ---
 
-## 🔥 Key Highlights
-
-- Multi-Agent AI architecture with 4 specialized agents
-- Real-world ATS-inspired candidate ranking
-- Groq LLM powered interview question generation
-- Automated HR report with hiring recommendation
-- TF-IDF cosine similarity for accurate JD matching
-- Live Streamlit deployment with analytics dashboard
-- Modular and scalable codebase
-
----
-
-## 📦 Requirements
-
-streamlit
-groq
-pdfplumber
-scikit-learn
-pandas
-python-dotenv
-langchain
-chromadb
-
----
-
-## 🚀 Future Improvements
-
-- [ ] RAG-powered semantic resume understanding
-- [ ] Multi-Agent Voice Interview System
-- [ ] Recruiter Authentication
-- [ ] Email Automation to candidates
-- [ ] SQL Candidate Database
-- [ ] Advanced ATS Scoring
-- [ ] Docker Deployment
-- [ ] FastAPI Backend Integration
-- [ ] LinkedIn Profile Integration
-
----
-
-## 👩‍💻 Author
-
-**Pratiksha Biradar**
-Gen AI Developer | Data Scientist | AI Engineer
-
-- GitHub: https://github.com/pratikshabiradar19
-- LinkedIn: https://www.linkedin.com/in/pratiksha-biradar-979b98315  ✅
-
----
-
-## ⭐ Support
-
-If you like this project, give it a star ⭐ and share it!
-
+*Built by [Pratiksha Biradar](https://github.com/pratikshabiradar19) — Gen AI Engineer*
